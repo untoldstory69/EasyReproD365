@@ -6,6 +6,7 @@ using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
 using System.Security;
+using System.Diagnostics;
 
 namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
 {
@@ -35,6 +36,20 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
                 xrmApp.Grid.Search("A. Datum");
 
                 xrmApp.Grid.OpenRecord(0);
+
+                xrmApp.Entity.SelectForm("Sales Insights");
+
+                Field accountFieldName = xrmApp.Entity.GetField("name");
+
+                string accountFieldNameValue = xrmApp.Entity.GetValue("name");
+                /**
+
+                Field accountWebsiteURL = xrmApp.Entity.GetField("websiteurl");
+
+                xrmApp.Entity.ClearValue(accountFieldNameValue);
+
+                xrmApp.Entity.SetValue(accountWebsiteURL.ToString(), "https://testkishor.com.au");
+                **/
 
                 xrmApp.ThinkTime(3000);
 
