@@ -7,6 +7,7 @@ using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
 using System.Security;
 using TechTalk.SpecFlow.EnvironmentAccess;
+using System.ComponentModel;
 
 namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
 {
@@ -19,6 +20,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         private readonly SecureString _mfaSecretKey = System.Configuration.ConfigurationManager.AppSettings["MfaSecretKey"].ToSecureString();
         private readonly Uri _xrmUri = new Uri(System.Configuration.ConfigurationManager.AppSettings["OnlineCrmUrl"].ToString());
 
+        [TestCategory("POC")]
         [TestMethod]
         public void AccContact()
         {
@@ -34,7 +36,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
 
                 xrmApp.CommandBar.ClickCommand("New");
 
-                var accountName = TestSettings.GetRandomString(7,15) + " " + TestSettings.GetRandomString(3,4) + "TA";
+                var accountName = "Test Account" + TestSettings.GetRandomString(7,15) + " " + TestSettings.GetRandomString(3,4) + "TA";
                 xrmApp.Entity.SetValue("name", accountName);
                 xrmApp.Entity.SetValue("websiteurl", "www." + TestSettings.GetRandomString(7, 15) + "nopagefountd.test.com");
 
@@ -51,8 +53,8 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
                 xrmApp.CommandBar.ClickCommand("New");
 
                 //summary
-                xrmApp.Entity.SetValue("firstname", TestSettings.GetRandomString(2,5) + " " + TestSettings.GetRandomString(3,4));
-                xrmApp.Entity.SetValue("lastname", TestSettings.GetRandomString(2,5)  + " " + TestSettings.GetRandomString(3, 4));
+                xrmApp.Entity.SetValue("firstname", "Test FName" + TestSettings.GetRandomString(2,5) + " " + TestSettings.GetRandomString(3,4));
+                xrmApp.Entity.SetValue("lastname", "Test LName" + TestSettings.GetRandomString(2,5)  + " " + TestSettings.GetRandomString(3, 4));
                 xrmApp.Entity.SetValue("parentcustomerid", accountName);
                 xrmApp.Lookup.OpenRecord(0);
 
@@ -64,12 +66,6 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
                 xrmApp.Entity.SetValue(birthDate);
                 xrmApp.Entity.Save();
                 xrmApp.ThinkTime(3000);
-
-
-
-
-
-
 
 
             }
