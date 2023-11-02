@@ -30,7 +30,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample
             Headless = false,
             Kiosk = false,
             UserAgent = false,
-            DefaultThinkTime = 2000,
+            DefaultThinkTime = 10,
             RemoteBrowserType = (BrowserType)Enum.Parse(typeof(BrowserType), RemoteType),
             RemoteHubServer = new Uri(RemoteHubServerURL),
             UCITestMode = true,
@@ -128,5 +128,6 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample
         public const string Project = "Project Resource Hub";
         public const string FieldService = "Field Resource Hub";
         public const string ProjectOps = "Project Operations";
+        public const string DYJ = "Test DYJ";
     }
 }
