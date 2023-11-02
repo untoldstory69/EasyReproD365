@@ -38,7 +38,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
                 
                 // Create Account
                 xrmApp.Navigation.OpenSubArea("Group1", "Accounts");
-
+                 
                 xrmApp.CommandBar.ClickCommand("New");
 
                 xrmApp.Entity.SetValue("name", instituteName);
