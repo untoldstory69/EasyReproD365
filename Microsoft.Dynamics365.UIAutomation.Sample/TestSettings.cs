@@ -128,6 +128,6 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample
         public const string Project = "Project Resource Hub";
         public const string FieldService = "Field Resource Hub";
         public const string ProjectOps = "Project Operations";
-        public const string DYJ = "Test DYJ";
+        public const string DYJ = "DYJ";
     }
 }

@@ -37,7 +37,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
                 xrmApp.Navigation.OpenApp(UCIAppName.DYJ);
                 
                 // Create Account
-                xrmApp.Navigation.OpenSubArea("Group1", "Accounts");
+                xrmApp.Navigation.OpenSubArea("New Group", "Accounts");
                  
                 xrmApp.CommandBar.ClickCommand("New");
 
@@ -52,14 +52,12 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
                 xrmApp.ThinkTime(3000);
                 
                 // Create Apprentice
-                xrmApp.Navigation.OpenSubArea("Group1", "Apprentices");
+                xrmApp.Navigation.OpenSubArea("New Group", "Apprentices");
                 
                 xrmApp.CommandBar.ClickCommand("New");
                 xrmApp.Entity.SetValue("name", apprenticeName);
                 
-                xrmApp.Entity.SetValue("institute", instituteName);
-                xrmApp.Lookup.OpenRecord(0);
-                xrmApp.ThinkTime(2000);
+               
 
                 var birthDate = new DateTimeControl("dateofbirth") { Value = DateTime.Now.AddYears(-20) };
                 xrmApp.Entity.SetValue(birthDate);
@@ -70,21 +68,26 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
                 xrmApp.Entity.SetValue(new OptionSet { Name = "gender", Value = "Male" });
 
                 xrmApp.Entity.SetValue("address", "123 Brisbane City, QLD, 4000");
+
+                xrmApp.Entity.SetValue("institute", instituteName);
+                xrmApp.Lookup.OpenRecord(0);
+                xrmApp.ThinkTime(2000);
+
                 xrmApp.CommandBar.ClickCommand("Save & Close");
 
                 // Create Gurdian
-                xrmApp.Navigation.OpenSubArea("Group1", "Gurdians");
+                xrmApp.Navigation.OpenSubArea("New Group", "Gurdians");
 
                 xrmApp.CommandBar.ClickCommand("New");
                 xrmApp.Entity.SetValue("name", gurdianName);
 
-                xrmApp.Entity.SetValue("apprenticename", apprenticeName);
+                xrmApp.Entity.SetValue("apprentice", apprenticeName);
                 xrmApp.Lookup.OpenRecord(0);
 
                 xrmApp.CommandBar.ClickCommand("Save & Close");
                 
                 // Create Contract Trainings
-                xrmApp.Navigation.OpenSubArea("Group1", "ContractTrainings");
+                /**xrmApp.Navigation.OpenSubArea("Group1", "ContractTrainings");
 
                 xrmApp.CommandBar.ClickCommand("New");
                 xrmApp.Entity.SetValue("contractname", contractName);
@@ -94,8 +97,10 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
 
                 xrmApp.Entity.SetValue("apprentice", apprenticeName);
                 xrmApp.Lookup.OpenRecord(0);
+                
 
                 xrmApp.CommandBar.ClickCommand("Save & Close");
+                **/
 
 
 
