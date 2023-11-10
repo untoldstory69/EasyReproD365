@@ -6,11 +6,14 @@ using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
 using System.Security;
+using Microsoft.Dynamics365.UIAutomation.Api;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
 {
     [TestClass]
-    public class TestPOC
+    public class AccountContactCopy : Tests
     {
 
         private readonly SecureString _username = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
@@ -18,8 +21,9 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
         private readonly SecureString _mfaSecretKey = System.Configuration.ConfigurationManager.AppSettings["MfaSecretKey"].ToSecureString();
         private readonly Uri _xrmUri = new Uri(System.Configuration.ConfigurationManager.AppSettings["OnlineCrmUrl"].ToString());
 
+        [TestCategory("POC")]
         [TestMethod]
-        public void UCITestPOC()
+        public void AccContactCopy()
         {
             var client = new WebClient(TestSettings.Options);
             using (var xrmApp = new XrmApp(client))
@@ -28,23 +32,17 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
 
                 xrmApp.Navigation.OpenApp(UCIAppName.Sales);
 
+                // Create Account
                 xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
-
                 xrmApp.CommandBar.ClickCommand("New");
 
-                xrmApp.Entity.SetValue("name","Test John Doe");
-
-                xrmApp.Entity.Save();
-
-                xrmApp.Timeline.AddPhoneCall("Introductory Call", "0410111223", "this is the introductory phone call with the clients", "10 mins");
-                xrmApp.ThinkTime(3000);
-                xrmApp.Timeline.SaveAndClosePhoneCall();
-                 
-                 
-           
+                var accountName = "Test Account" + TestSettings.GetRandomString(7, 15) + " " + TestSettings.GetRandomString(3, 4) + "TA";
+                xrmApp.Entity.SetValue("name", accountName);
+                var name = xrmApp.Entity.GetValue("name");
+                Assert.IsNotNull(name);
 
             }
-            
+
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Security;
 using TechTalk.SpecFlow.EnvironmentAccess;
 using System.ComponentModel;
 
-namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
+namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
 {
     [TestClass]
     public class DYJFlows 
