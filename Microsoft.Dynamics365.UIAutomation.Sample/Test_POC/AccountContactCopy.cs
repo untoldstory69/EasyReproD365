@@ -39,7 +39,8 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
                 var accountName = "Test Account" + TestSettings.GetRandomString(7, 15) + " " + TestSettings.GetRandomString(3, 4) + "TA";
                 xrmApp.Entity.SetValue("name", accountName);
                 var name = xrmApp.Entity.GetValue("name");
-                Assert.IsNotNull(name);
+                //Assert.IsNotNull(name);
+                Assert.AreEqual(accountName, name, "The text are not equal");
 
             }
 

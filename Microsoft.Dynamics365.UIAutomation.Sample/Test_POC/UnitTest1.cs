@@ -5,8 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
 using System;
 using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
-using AventStack.ExtentReports.Reporter.Config;
-using Microsoft.AspNetCore.Razor.Language;
+//using AventStack.ExtentReports.Reporter.Config;
+
 
 namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
 
@@ -28,11 +28,11 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
             // http://extentreports.com/docs/versions/4/net/
             //var dir = context.TestDir + "\\";
             //const string fileName = "report.html";
-            var htmlReporter = new ExtentSparkReporter(@"C:\Users\kishor.sharma\Source\Repos\Ki\EasyReproD365\Microsoft.Dynamics365.UIAutomation.Sample\Test_POC\report.html");
-            htmlReporter.Config.DocumentTitle = $"Test Results: {DateTime.Now:MM/dd/yyyy h:mm tt}";
+            var htmlReporter = new ExtentHtmlReporter(@"C:\Users\kishor.sharma\Source\Repos\Ki\EasyReproD365\Microsoft.Dynamics365.UIAutomation.Sample\report.html");
+          /**  htmlReporter.Config.DocumentTitle = $"Test Results: {DateTime.Now:MM/dd/yyyy h:mm tt}";
             htmlReporter.Config.ReportName = context.FullyQualifiedTestClassName;
             htmlReporter.Config.Theme = Theme.Dark;
-
+          **/
             // Add any additional contextual information
             Extent = new ExtentReports();
             Extent.AddSystemInfo("Browser", Enum.GetName(typeof(BrowserType), TestSettings.Options.BrowserType));
