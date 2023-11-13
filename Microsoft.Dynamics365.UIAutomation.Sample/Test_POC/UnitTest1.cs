@@ -5,6 +5,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
 using System;
 using TestContext = Microsoft.VisualStudio.TestTools.UnitTesting.TestContext;
+using OpenQA.Selenium.DevTools.V113.Tethering;
+using System.Windows.Forms;
+using System.IO;
+using System.Diagnostics.Eventing.Reader;
+using AventStack.ExtentReports.MarkupUtils;
 //using AventStack.ExtentReports.Reporter.Config;
 
 
@@ -26,10 +31,11 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
             AssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
 
             // http://extentreports.com/docs/versions/4/net/
-            //var dir = context.TestDir + "\\";
-            //const string fileName = "report.html";
-            var htmlReporter = new ExtentHtmlReporter(@"C:\Users\kishor.sharma\Source\Repos\Ki\EasyReproD365\Microsoft.Dynamics365.UIAutomation.Sample\report.html");
-          /**  htmlReporter.Config.DocumentTitle = $"Test Results: {DateTime.Now:MM/dd/yyyy h:mm tt}";
+            var dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\";
+            const string fileName = "ExtentReport.html";
+            var htmlReporter = new ExtentHtmlReporter(dir + fileName);
+          
+            /**  htmlReporter.Config.DocumentTitle = $"Test Results: {DateTime.Now:MM/dd/yyyy h:mm tt}";
             htmlReporter.Config.ReportName = context.FullyQualifiedTestClassName;
             htmlReporter.Config.Theme = Theme.Dark;
           **/
@@ -41,7 +47,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
             Extent.AddSystemInfo("D365 CE Instance",
                 System.Configuration.ConfigurationManager.AppSettings["OnlineCrmUrl"]);
             Extent.AttachReporter(htmlReporter);
-           // context.AddResultFile(fileName);
+           context.AddResultFile(fileName);
 
             // Create a container for the tests in the class
             TestParent = Extent.CreateTest(context.FullyQualifiedTestClassName);
@@ -72,8 +78,9 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
         [TestCleanup]
         public void TestCleanup()
         {
-            
+
             // Sets individual Extent test result so it reflects correctly in the report
+           
             if (Test.Status == Status.Error)
                 return;
 
@@ -110,6 +117,14 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
         public static void AssemblyCleanup()
         {
             Extent.Flush();
+        }
+        public void LogExceptionAndFail(Exception e)
+        {
+            // Formats the exception details to look nice
+            var message = e.Message + Environment.NewLine + e.StackTrace.Trim();
+            var markup = MarkupHelper.CreateCodeBlock(message);
+            Test.Error(markup);
+            throw e;
         }
     }
 }

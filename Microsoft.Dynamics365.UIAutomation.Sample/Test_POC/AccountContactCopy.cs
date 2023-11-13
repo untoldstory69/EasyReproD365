@@ -25,24 +25,31 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
         [TestMethod]
         public void AccContactCopy()
         {
-            var client = new WebClient(TestSettings.Options);
-            using (var xrmApp = new XrmApp(client))
+            try
             {
-                xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
+                var client = new WebClient(TestSettings.Options);
+                using (var xrmApp = new XrmApp(client))
+                {
+                    xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
 
-                xrmApp.Navigation.OpenApp(UCIAppName.Sales);
+                    xrmApp.Navigation.OpenApp(UCIAppName.Sales);
 
-                // Create Account
-                xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
-                xrmApp.CommandBar.ClickCommand("New");
+                    // Create Account
+                    xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
+                    xrmApp.CommandBar.ClickCommand("New");
 
-                var accountName = "Test Account" + TestSettings.GetRandomString(7, 15) + " " + TestSettings.GetRandomString(3, 4) + "TA";
-                xrmApp.Entity.SetValue("name", accountName);
-                var name = xrmApp.Entity.GetValue("name");
-                //Assert.IsNotNull(name);
-                Assert.AreEqual(accountName, name, "The text are not equal");
+                    var accountName = "Test Account" + TestSettings.GetRandomString(7, 15) + " " + TestSettings.GetRandomString(3, 4) + "TA";
+                    xrmApp.Entity.SetValue("name", accountName);
+                    var name = xrmApp.Entity.GetValue("name");
+                    //Assert.IsNotNull(name);
+                    Assert.AreEqual("Failing test to see failed test result", name, "The text are not equal");
 
+                }
             }
+            catch (Exception ex) {
+                LogExceptionAndFail(ex);
+            }
+            
 
         }
     }

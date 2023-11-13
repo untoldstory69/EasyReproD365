@@ -12,7 +12,7 @@ using System.ComponentModel;
 namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
 {
     [TestClass]
-    public class AccountContact
+    public class AccountContact : Tests
     {
 
         private readonly SecureString _username = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
