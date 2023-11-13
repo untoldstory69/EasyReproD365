@@ -12,14 +12,13 @@ using System.Diagnostics.Eventing.Reader;
 using AventStack.ExtentReports.MarkupUtils;
 using OpenQA.Selenium;
 using Microsoft.Dynamics365.UIAutomation.Api.UCI;
-//using AventStack.ExtentReports.Reporter.Config;
 
 
 namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
 
 {
     [TestClass]
-    public class Tests
+    public class ExtentReport
     {
         protected static ExtentReports Extent;
         protected static ExtentTest TestParent;
@@ -31,16 +30,12 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
         public static void AssemblyInitialize(TestContext context)
         {
             AssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
+            // The result is added under TestResult folder under EasyReproD365 folder
 
-            // http://extentreports.com/docs/versions/4/net/
-            var dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\";
+            var dir = context.TestDir + "\\";
             const string fileName = "ExtentReport.html";
             var htmlReporter = new ExtentHtmlReporter(dir + fileName);
-          
-            /**  htmlReporter.Config.DocumentTitle = $"Test Results: {DateTime.Now:MM/dd/yyyy h:mm tt}";
-            htmlReporter.Config.ReportName = context.FullyQualifiedTestClassName;
-            htmlReporter.Config.Theme = Theme.Dark;
-          **/
+
             // Add any additional contextual information
             Extent = new ExtentReports();
             Extent.AddSystemInfo("Browser", Enum.GetName(typeof(BrowserType), TestSettings.Options.BrowserType));
@@ -49,7 +44,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
             Extent.AddSystemInfo("D365 CE Instance",
                 System.Configuration.ConfigurationManager.AppSettings["OnlineCrmUrl"]);
             Extent.AttachReporter(htmlReporter);
-           context.AddResultFile(fileName);
+            context.AddResultFile(fileName);
 
             // Create a container for the tests in the class
             TestParent = Extent.CreateTest(context.FullyQualifiedTestClassName);
@@ -82,7 +77,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
         {
 
             // Sets individual Extent test result so it reflects correctly in the report
-           
+
             if (Test.Status == Status.Error)
                 return;
 
@@ -113,7 +108,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
                     Test.Fail("Test Failed - Unknown");
                     break;
             }
-            
+
         }
         [AssemblyCleanup]
         public static void AssemblyCleanup()

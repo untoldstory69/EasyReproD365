@@ -411,7 +411,7 @@
     <Compile Include="Test_POC\DYJFlow.cs" />
     <Compile Include="Test_POC\AccountContact.cs" />
     <Compile Include="Test_POC\TestPOC.cs" />
-    <Compile Include="Test_POC\UnitTest1.cs" />
+    <Compile Include="Test_POC\ExtentReport.cs" />
     <Compile Include="UCI\ApiTests\BrowserCommand_Tests.cs" />
     <Compile Include="UCI\ApiTests\TestsBase_Tests.cs" />
     <Compile Include="UCI\BusinessProcessFlow\BusinessProcessFlowNextStage.cs" />

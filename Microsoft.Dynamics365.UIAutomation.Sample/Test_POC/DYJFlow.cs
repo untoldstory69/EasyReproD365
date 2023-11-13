@@ -12,7 +12,7 @@ using System.ComponentModel;
 namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
 {
     [TestClass]
-    public class DYJFlows 
+    public class DYJFlows : ExtentReport
     {
 
         private readonly SecureString _username = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
@@ -26,87 +26,76 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
         {
             var client = new WebClient(TestSettings.Options);
             using (var xrmApp = new XrmApp(client))
-            {
-                var instituteName = "Institute " + TestSettings.GetRandomString(7, 15) + " " + TestSettings.GetRandomString(3, 4) + "TA";
-                var apprenticeName = "Apprentice " + TestSettings.GetRandomString(3, 10);
-                var gurdianName = "Gurdian " + TestSettings.GetRandomString(3, 10);
-                var contractName = "Contract " + TestSettings.GetRandomString(3, 10);
-
-                xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
-
-                xrmApp.Navigation.OpenApp(UCIAppName.DYJ);
+                try
                 
-                // Create Account
-                xrmApp.Navigation.OpenSubArea("New Group", "Accounts");
-                 
-                xrmApp.CommandBar.ClickCommand("New");
+                    {
+                        var instituteName = "Institute " + TestSettings.GetRandomString(7, 15) + " " + TestSettings.GetRandomString(3, 4) + "TA";
+                        var apprenticeName = "Apprentice " + TestSettings.GetRandomString(3, 10);
+                        var gurdianName = "Gurdian " + TestSettings.GetRandomString(3, 10);
+                        var contractName = "Contract " + TestSettings.GetRandomString(3, 10);
 
-                xrmApp.Entity.SetValue("name", instituteName);
-                xrmApp.Entity.SetValue("websiteurl", "www." + TestSettings.GetRandomString(7, 15) + "nopagefountd.test.com");
+                        xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
 
-                    //details
-                xrmApp.Entity.SelectTab("Details");
-                xrmApp.Entity.SetValue("description", "this is the text in the text area from automation" + TestSettings.GetRandomString(7, 15));
+                        xrmApp.Navigation.OpenApp(UCIAppName.DYJ);
 
-                xrmApp.CommandBar.ClickCommand("Save & Close");
-                xrmApp.ThinkTime(3000);
+                        // Create Account
+                        xrmApp.Navigation.OpenSubArea("New Group", "Accounts");
+
+                        xrmApp.CommandBar.ClickCommand("New");
+
+                        xrmApp.Entity.SetValue("name", instituteName);
+                        xrmApp.Entity.SetValue("websiteurl", "www." + TestSettings.GetRandomString(7, 15) + "nopagefountd.test.com");
+
+                        //details
+                        xrmApp.Entity.SelectTab("Details");
+                        xrmApp.Entity.SetValue("description", "this is the text in the text area from automation" + TestSettings.GetRandomString(7, 15));
+
+                        xrmApp.CommandBar.ClickCommand("Save & Close");
+                        xrmApp.ThinkTime(3000);
+
+                        // Create Apprentice
+                        xrmApp.Navigation.OpenSubArea("New Group", "Apprentices");
+
+                        xrmApp.CommandBar.ClickCommand("New");
+                        xrmApp.Entity.SetValue("name", apprenticeName);
+
+
+
+                        var birthDate = new DateTimeControl("dateofbirth") { Value = DateTime.Now.AddYears(-20) };
+                        xrmApp.Entity.SetValue(birthDate);
+
+                        var registerDate = new DateTimeControl("dateofregistration") { Value = DateTime.Now.AddDays(20) };
+                        xrmApp.Entity.SetValue(registerDate);
+
+                        xrmApp.Entity.SetValue(new OptionSet { Name = "gender", Value = "Male" });
+
+                        xrmApp.Entity.SetValue("address", "123 Brisbane City, QLD, 4000");
+
+                        xrmApp.Entity.SetValue("institute", instituteName);
+                        xrmApp.Lookup.OpenRecord(0);
+                        xrmApp.ThinkTime(2000);
+
+                        xrmApp.CommandBar.ClickCommand("Save & Close");
+
+                        // Create Gurdian
+                        xrmApp.Navigation.OpenSubArea("New Group", "Gurdians");
+
+                        xrmApp.CommandBar.ClickCommand("New");
+                        xrmApp.Entity.SetValue("name", gurdianName);
+
+                        xrmApp.Entity.SetValue("apprentice", apprenticeName);
+                        xrmApp.Lookup.OpenRecord(0);
+
+                        xrmApp.CommandBar.ClickCommand("Save & Close");
+
+                    }
                 
-                // Create Apprentice
-                xrmApp.Navigation.OpenSubArea("New Group", "Apprentices");
-                
-                xrmApp.CommandBar.ClickCommand("New");
-                xrmApp.Entity.SetValue("name", apprenticeName);
-                
-               
+                catch (Exception ex)
+                {
 
-                var birthDate = new DateTimeControl("dateofbirth") { Value = DateTime.Now.AddYears(-20) };
-                xrmApp.Entity.SetValue(birthDate);
-
-                var registerDate = new DateTimeControl("dateofregistration") { Value = DateTime.Now.AddDays(20) };
-                xrmApp.Entity.SetValue(registerDate);
-
-                xrmApp.Entity.SetValue(new OptionSet { Name = "gender", Value = "Male" });
-
-                xrmApp.Entity.SetValue("address", "123 Brisbane City, QLD, 4000");
-
-                xrmApp.Entity.SetValue("institute", instituteName);
-                xrmApp.Lookup.OpenRecord(0);
-                xrmApp.ThinkTime(2000);
-
-                xrmApp.CommandBar.ClickCommand("Save & Close");
-
-                // Create Gurdian
-                xrmApp.Navigation.OpenSubArea("New Group", "Gurdians");
-
-                xrmApp.CommandBar.ClickCommand("New");
-                xrmApp.Entity.SetValue("name", gurdianName);
-
-                xrmApp.Entity.SetValue("apprentice", apprenticeName);
-                xrmApp.Lookup.OpenRecord(0);
-
-                xrmApp.CommandBar.ClickCommand("Save & Close");
-                
-                // Create Contract Trainings
-                /**xrmApp.Navigation.OpenSubArea("Group1", "ContractTrainings");
-
-                xrmApp.CommandBar.ClickCommand("New");
-                xrmApp.Entity.SetValue("contractname", contractName);
-
-                var commenceDate = new DateTimeControl("commencedate") { Value = DateTime.Now };
-                xrmApp.Entity.SetValue(commenceDate);
-
-                xrmApp.Entity.SetValue("apprentice", apprenticeName);
-                xrmApp.Lookup.OpenRecord(0);
-                
-
-                xrmApp.CommandBar.ClickCommand("Save & Close");
-                **/
-
-
-
-
-
-            }
+                    AddScreenShot(client, "Failed Screen");
+                    LogExceptionAndFail(ex);
+                }
 
         }
     }

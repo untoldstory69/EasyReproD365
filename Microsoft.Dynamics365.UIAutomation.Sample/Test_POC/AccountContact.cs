@@ -12,7 +12,7 @@ using System.ComponentModel;
 namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
 {
     [TestClass]
-    public class AccountContact : Tests
+    public class AccountContact : ExtentReport
     {
 
         private readonly SecureString _username = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
@@ -26,49 +26,58 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
         {
             var client = new WebClient(TestSettings.Options);
             using (var xrmApp = new XrmApp(client))
-            {
-                xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
+                try
+                {
+                    {
+                        xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
 
-                xrmApp.Navigation.OpenApp(UCIAppName.Sales);
-                
-                // Create Account
-                xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
+                        xrmApp.Navigation.OpenApp(UCIAppName.Sales);
 
-                xrmApp.CommandBar.ClickCommand("New");
+                        // Create Account
+                        xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
 
-                var accountName = "Test Account" + TestSettings.GetRandomString(7,15) + " " + TestSettings.GetRandomString(3,4) + "TA";
-                xrmApp.Entity.SetValue("name", accountName);
-                xrmApp.Entity.SetValue("websiteurl", "www." + TestSettings.GetRandomString(7, 15) + "nopagefountd.test.com");
+                        xrmApp.CommandBar.ClickCommand("New");
 
-                //details
-                xrmApp.Entity.SelectTab("Details");
-                xrmApp.Entity.SetValue("description", "this is the text in the text area from automation" + TestSettings.GetRandomString(7, 15));
+                        var accountName = "Test Account" + TestSettings.GetRandomString(7, 15) + " " + TestSettings.GetRandomString(3, 4) + "TA";
+                        xrmApp.Entity.SetValue("name", accountName);
+                        xrmApp.Entity.SetValue("websiteurl", "www." + TestSettings.GetRandomString(7, 15) + "nopagefountd.test.com");
 
-                xrmApp.CommandBar.ClickCommand("Save & Close");
-                xrmApp.ThinkTime(3000);
+                        //details
+                        xrmApp.Entity.SelectTab("Details");
+                        xrmApp.Entity.SetValue("description", "this is the text in the text area from automation" + TestSettings.GetRandomString(7, 15));
 
-                //Create Contact
-                xrmApp.Navigation.OpenSubArea("Sales", "Contacts");
+                        xrmApp.CommandBar.ClickCommand("Save & Close");
+                        xrmApp.ThinkTime(3000);
 
-                xrmApp.CommandBar.ClickCommand("New");
+                        //Create Contact
+                        xrmApp.Navigation.OpenSubArea("Sales", "Contacts");
 
-                //summary
-                xrmApp.Entity.SetValue("firstname", "Test FName" + TestSettings.GetRandomString(2,5) + " " + TestSettings.GetRandomString(3,4));
-                xrmApp.Entity.SetValue("lastname", "Test LName" + TestSettings.GetRandomString(2,5)  + " " + TestSettings.GetRandomString(3, 4));
-                xrmApp.Entity.SetValue("parentcustomerid", accountName);
-                xrmApp.Lookup.OpenRecord(0);
+                        xrmApp.CommandBar.ClickCommand("New");
 
-                //details
-                xrmApp.Entity.SelectTab("Details");
-                xrmApp.Entity.SetValue(new OptionSet { Name = "gendercode", Value = "1" });
-                
-                var birthDate = new DateTimeControl("birthdate") { Value = DateTime.Now};
-                xrmApp.Entity.SetValue(birthDate);
-                xrmApp.Entity.Save();
-                xrmApp.ThinkTime(3000);
+                        //summary
+                        xrmApp.Entity.SetValue("firstname", "Test FName" + TestSettings.GetRandomString(2, 5) + " " + TestSettings.GetRandomString(3, 4));
+                        xrmApp.Entity.SetValue("lastname", "Test LName" + TestSettings.GetRandomString(2, 5) + " " + TestSettings.GetRandomString(3, 4));
+                        xrmApp.Entity.SetValue("parentcustomerid", accountName);
+                        xrmApp.Lookup.OpenRecord(0);
+
+                        //details
+                        xrmApp.Entity.SelectTab("Details");
+                        xrmApp.Entity.SetValue(new OptionSet { Name = "gendercode", Value = "1" });
+
+                        var birthDate = new DateTimeControl("birthdate") { Value = DateTime.Now };
+                        xrmApp.Entity.SetValue(birthDate);
+                        xrmApp.Entity.Save();
+                        xrmApp.ThinkTime(3000);
 
 
-            }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    LogExceptionAndFail(ex);
+                    AddScreenShot(client, "Failed Screen");
+                }
 
         }
     }

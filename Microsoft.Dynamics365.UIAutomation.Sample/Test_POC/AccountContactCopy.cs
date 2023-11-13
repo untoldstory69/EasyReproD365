@@ -6,14 +6,11 @@ using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
 using System.Security;
-using Microsoft.Dynamics365.UIAutomation.Api;
-using System.Diagnostics;
-using System.Linq;
 
 namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
 {
     [TestClass]
-    public class AccountContactCopy : Tests
+    public class AccountContactCopy : ExtentReport
     {
 
         private readonly SecureString _username = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
@@ -28,7 +25,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
             var client = new WebClient(TestSettings.Options);
             using (var xrmApp = new XrmApp(client))
                 try
-            {
+            
                 
                 {
                     xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
@@ -46,10 +43,12 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
                     Assert.AreEqual("Failing test to see failed test result", name, "The text are not equal");
 
                 }
-            }
+            
             catch (Exception ex) {
-                 LogExceptionAndFail(ex);
-                 AddScreenShot(client, "Failed Screen");
+                    AddScreenShot(client, "Failed Screen");
+                    LogExceptionAndFail(ex);
+                
+
                 }
             
 
