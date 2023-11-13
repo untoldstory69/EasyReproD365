@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics.Eventing.Reader;
 using AventStack.ExtentReports.MarkupUtils;
+using OpenQA.Selenium;
+using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 //using AventStack.ExtentReports.Reporter.Config;
 
 
@@ -117,6 +119,15 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
         public static void AssemblyCleanup()
         {
             Extent.Flush();
+        }
+        public void AddScreenShot(WebClient client, string title)
+        {
+            var filename = Guid.NewGuid();
+            var filePath = Path.Combine(TestContext.TestResultsDirectory, $"{filename}.png");
+            // Wait for the page to be idle (UCI only)
+            client.Browser.Driver.WaitForTransaction();
+            client.Browser.TakeWindowScreenShot(filePath, ScreenshotImageFormat.Png);
+            Test.Info(title, MediaEntityBuilder.CreateScreenCaptureFromPath(filePath).Build());
         }
         public void LogExceptionAndFail(Exception e)
         {

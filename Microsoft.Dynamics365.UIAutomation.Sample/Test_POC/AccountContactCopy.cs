@@ -25,10 +25,11 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
         [TestMethod]
         public void AccContactCopy()
         {
-            try
+            var client = new WebClient(TestSettings.Options);
+            using (var xrmApp = new XrmApp(client))
+                try
             {
-                var client = new WebClient(TestSettings.Options);
-                using (var xrmApp = new XrmApp(client))
+                
                 {
                     xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
 
@@ -47,8 +48,9 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.Test_POC
                 }
             }
             catch (Exception ex) {
-                LogExceptionAndFail(ex);
-            }
+                 LogExceptionAndFail(ex);
+                 AddScreenShot(client, "Failed Screen");
+                }
             
 
         }
