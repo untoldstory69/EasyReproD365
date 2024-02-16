@@ -21,24 +21,35 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         {
             var client = new WebClient(TestSettings.Options);
             using (var xrmApp = new XrmApp(client))
-            {
-                xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
+                try
+                {
+                    {
+                        xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
 
-                xrmApp.Navigation.OpenApp(UCIAppName.Sales);
+                        xrmApp.Navigation.OpenApp(UCIAppName.Sales);
 
-                xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
+                        xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
 
-                xrmApp.Grid.SwitchView("Active Accounts");
+                        xrmApp.Grid.SwitchView("Active Accounts");
 
-                xrmApp.Grid.OpenRecord(0);
+                        xrmApp.Grid.OpenRecord(0);
 
-                xrmApp.Timeline.AddAppointment("Entry into Zoo", "Microsoft", "45 minutes", String.Empty);
-                //xrmApp.Timeline.AddAppointment("Entry into Zoo", "Microsoft", "45 minutes", "Entertainment");
+                        xrmApp.Timeline.AddAppointment("Entry into Zoo", "Microsoft", "45 minutes", String.Empty);
+                        //xrmApp.Timeline.AddAppointment("Entry into Zoo", "Microsoft", "45 minutes", "Entertainment");
 
-                xrmApp.Timeline.SaveAndCloseAppointment();
+                        xrmApp.Timeline.SaveAndCloseAppointment();
 
-                xrmApp.ThinkTime(3000);
-            }
+                        //xrmApp.ThinkTime(3000);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    LogExceptionAndFail(ex);
+                    AddScreenShot(client, "Failed Screen");
+                }
+
+           
         }
 
         [TestMethod]
@@ -46,37 +57,48 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         {
             var client = new WebClient(TestSettings.Options);
             using (var xrmApp = new XrmApp(client))
-            {
-                xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
+                try
+                {
+                    {
+                        xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
 
-                xrmApp.Navigation.OpenApp(UCIAppName.Sales);
+                        xrmApp.Navigation.OpenApp(UCIAppName.Sales);
 
-                xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
+                        xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
 
-                xrmApp.Grid.SwitchView("Active Accounts");
+                        xrmApp.Grid.SwitchView("Active Accounts");
 
-                xrmApp.Grid.OpenRecord(0);
+                        xrmApp.Grid.OpenRecord(0);
 
-                xrmApp.Timeline.ClickEmailMenuItem();
-                xrmApp.ThinkTime(4000);
+                        xrmApp.Timeline.ClickEmailMenuItem();
+                        //xrmApp.ThinkTime(4000);
 
-                xrmApp.Timeline.AddEmailSubject("Request admission to butterfly section in zoo");
+                        xrmApp.Timeline.AddEmailSubject("Request admission to butterfly section in zoo");
 
-                xrmApp.Timeline.AddEmailContacts(CreateBccLookupItemsFor("Jim Glynn (sample)", "Nancy Anderson (sample)"));
-                xrmApp.Timeline.AddEmailContacts(CreateCcLooupItemsFor("Jim Glynn (sample)", "Nancy Anderson (sample)"));
+                       // xrmApp.Timeline.AddEmailContacts(CreateBccLookupItemsFor("Trey Research", "Alex Baker"));
+                        xrmApp.Timeline.AddEmailContacts(CreateCcLooupItemsFor("Trey Research", "Alex Baker"));
 
 
-                // This fails as it already has a value.
-                //xrmApp.Timeline.AddEmailContacts(new MultiValueOptionSet()
-                //{
-                //    Name = Elements.ElementId[Reference.Timeline.EmailTo],
-                //    Values = new string[] { "Test Contact", "Jay Zee3" },
-                //});
+                        // This fails as it already has a value.
+                        //xrmApp.Timeline.AddEmailContacts(new MultiValueOptionSet()
+                        //{
+                        //    Name = Elements.ElementId[Reference.Timeline.EmailTo],
+                        //    Values = new string[] { "Test Contact", "Jay Zee3" },
+                        //});
 
-                xrmApp.Timeline.SaveAndCloseEmail();
+                        xrmApp.Timeline.SaveAndCloseEmail();
 
-                xrmApp.ThinkTime(3000);
-            }
+                        //xrmApp.ThinkTime(3000);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    LogExceptionAndFail(ex);
+                    AddScreenShot(client, "Failed Screen");
+                }
+
+            
         }
 
         [TestMethod]
@@ -99,11 +121,11 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
                         xrmApp.Grid.OpenRecord(0);
 
                         xrmApp.Timeline.ClickEmailMenuItem();
-                        xrmApp.ThinkTime(4000);
+                       // xrmApp.ThinkTime(4000);
 
                         xrmApp.Timeline.AddEmailSubject("Request admission to butterfly section in zoo");
-                        xrmApp.Timeline.AddEmailContacts(CreateBccLookupItemsFor("Jim Glynn (sample)", "Nancy Anderson (sample)"), true);
-                        xrmApp.Timeline.AddEmailContacts(CreateCcLooupItemsFor("Jim Glynn (sample)", "Nancy Anderson (sample)"), true);
+                        xrmApp.Timeline.AddEmailContacts(CreateBccLookupItemsFor("Trey Research", "Northwind Traders"), true);
+                        xrmApp.Timeline.AddEmailContacts(CreateCcLooupItemsFor("Trey Research", "Northwind Traders"), true);
 
                         // This fails as it already has a value.
                         //xrmApp.Timeline.AddEmailContacts(new MultiValueOptionSet()
@@ -118,7 +140,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
                                 Name = Elements.ElementId[Reference.Timeline.EmailTo],
                             });
 
-                        xrmApp.ThinkTime(3000);
+                        //xrmApp.ThinkTime(3000);
                     }
                 }
                 catch (Exception ex)
@@ -136,33 +158,44 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         {
             var client = new WebClient(TestSettings.Options);
             using (var xrmApp = new XrmApp(client))
-            {
-                xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
-
-                xrmApp.Navigation.OpenApp(UCIAppName.Sales);
-
-                xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
-
-                xrmApp.Grid.SwitchView("Active Accounts");
-
-                xrmApp.Grid.OpenRecord(0);
-
-                xrmApp.Timeline.ClickEmailMenuItem();
-                xrmApp.ThinkTime(4000);
-
-                xrmApp.Timeline.AddEmailSubject("Request admission to butterfly section in zoo");
-
-                xrmApp.Timeline.AddEmailContacts(CreateCcLooupItemsFor("Jim Glynn (sample)", "Nancy Anderson (sample)"), true);
-
-                var success = xrmApp.Timeline.RemoveEmail(
-                    new MultiValueOptionSet()
+                try
+                {
                     {
-                        Name = Elements.ElementId[Reference.Timeline.EmailCC],
-                        Values = new string[] { "Jim Glynn (sample)", "Nancy Anderson (sample)" },
-                    });
+                        xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
 
-                xrmApp.ThinkTime(3000);
-            }
+                        xrmApp.Navigation.OpenApp(UCIAppName.Sales);
+
+                        xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
+
+                        xrmApp.Grid.SwitchView("Active Accounts");
+
+                        xrmApp.Grid.OpenRecord(0);
+
+                        xrmApp.Timeline.ClickEmailMenuItem();
+                        xrmApp.ThinkTime(4000);
+
+                        xrmApp.Timeline.AddEmailSubject("Request admission to butterfly section in zoo");
+
+                        xrmApp.Timeline.AddEmailContacts(CreateCcLooupItemsFor("Trey Research", "Northwind Traders"), true);
+
+                        var success = xrmApp.Timeline.RemoveEmail(
+                            new MultiValueOptionSet()
+                            {
+                                Name = Elements.ElementId[Reference.Timeline.EmailCC],
+                                Values = new string[] { "Trey Research", "Northwind Traders" },
+                            });
+
+                       // xrmApp.ThinkTime(3000);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    LogExceptionAndFail(ex);
+                    AddScreenShot(client, "Failed Screen");
+                }
+
+           
         }
 
 
@@ -171,23 +204,34 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         {
             var client = new WebClient(TestSettings.Options);
             using (var xrmApp = new XrmApp(client))
-            {
-                xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
+                try
+                {
+                    {
+                        xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
 
-                xrmApp.Navigation.OpenApp(UCIAppName.Sales);
+                        xrmApp.Navigation.OpenApp(UCIAppName.Sales);
 
-                xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
+                        xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
 
-                xrmApp.Grid.SwitchView("Active Accounts");
+                        xrmApp.Grid.SwitchView("Active Accounts");
 
-                xrmApp.Grid.OpenRecord(0);
+                        xrmApp.Grid.OpenRecord(0);
 
-                xrmApp.Timeline.AddPhoneCall("Call Zoo primates section", "425-425-1235", "Specifically call the primate that can handle a phone !", "15 minutes");
+                        xrmApp.Timeline.AddPhoneCall("Call Zoo primates section", "425-425-1235", "Specifically call the primate that can handle a phone !", "15 minutes");
 
-                xrmApp.Timeline.SaveAndClosePhoneCall();
+                        xrmApp.Timeline.SaveAndClosePhoneCall();
 
-                xrmApp.ThinkTime(3000);
-            }
+                        //xrmApp.ThinkTime(3000);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    LogExceptionAndFail(ex);
+                    AddScreenShot(client, "Failed Screen");
+                }
+
+           
         }
 
         [TestMethod]
@@ -195,23 +239,34 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         {
             var client = new WebClient(TestSettings.Options);
             using (var xrmApp = new XrmApp(client))
-            {
-                xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
+                try
+                {
+                    {
+                        xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
 
-                xrmApp.Navigation.OpenApp(UCIAppName.Sales);
+                        xrmApp.Navigation.OpenApp(UCIAppName.Sales);
 
-                xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
+                        xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
 
-                xrmApp.Grid.SwitchView("Active Accounts");
+                        xrmApp.Grid.SwitchView("Active Accounts");
 
-                xrmApp.Grid.OpenRecord(0);
+                        xrmApp.Grid.OpenRecord(0);
 
-                xrmApp.Timeline.AddTask("Feed the Animals", "Make sure no one is looking while feeding", "5 minutes");
+                        xrmApp.Timeline.AddTask("Feed the Animals", "Make sure no one is looking while feeding", "5 minutes");
 
-                xrmApp.Timeline.SaveAndCloseTask();
+                        xrmApp.Timeline.SaveAndCloseTask();
 
-                xrmApp.ThinkTime(3000);
-            }
+                        //xrmApp.ThinkTime(3000);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    LogExceptionAndFail(ex);
+                    AddScreenShot(client, "Failed Screen");
+                }
+
+           
         }
 
         private LookupItem[] CreateBccLookupItemsFor(params string[] lookupNames)
