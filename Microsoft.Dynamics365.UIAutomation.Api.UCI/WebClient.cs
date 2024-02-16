@@ -383,7 +383,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Api.UCI
 
         internal BrowserCommandResult<bool> OpenApp(string appName, int thinkTime = Constants.DefaultThinkTime)
         {
-            ThinkTime(thinkTime);
+           // ThinkTime(thinkTime);
 
             return Execute(GetOptions($"Open App {appName}"), driver =>
             {
@@ -1504,7 +1504,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Api.UCI
 
         internal BrowserCommandResult<bool> SwitchView(string viewName, string subViewName = null, int thinkTime = Constants.DefaultThinkTime)
         {
-            ThinkTime(thinkTime);
+            //ThinkTime(thinkTime);
 
             return Execute(GetOptions($"Switch View"), driver =>
             {
@@ -1561,7 +1561,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Api.UCI
 
         internal BrowserCommandResult<bool> OpenRecord(int index, int thinkTime = Constants.DefaultThinkTime, bool checkRecord = false)
         {
-            ThinkTime(thinkTime);
+            //ThinkTime(thinkTime);
             return Execute(GetOptions("Open Grid Record"), driver =>
             {
                 var grid = driver.FindElement(By.XPath(AppElements.Xpath[AppReference.Grid.PcfContainer]));
@@ -4991,7 +4991,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Api.UCI
 
         internal BrowserCommandResult<bool> SwitchProcess(string processToSwitchTo, int thinkTime = Constants.DefaultThinkTime)
         {
-            ThinkTime(thinkTime);
+            //ThinkTime(thinkTime);
 
             return this.Execute(GetOptions($"Switch BusinessProcessFlow"), driver =>
             {
@@ -5449,7 +5449,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Api.UCI
 
         internal BrowserCommandResult<bool> NextStage(string stageName, Field businessProcessFlowField = null, int thinkTime = Constants.DefaultThinkTime)
         {
-            ThinkTime(thinkTime);
+            //ThinkTime(thinkTime);
 
             return this.Execute(GetOptions($"Next Stage"), driver =>
             {

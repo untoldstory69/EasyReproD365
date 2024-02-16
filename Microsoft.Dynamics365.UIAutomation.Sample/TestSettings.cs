@@ -30,7 +30,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample
             Headless = false,
             Kiosk = false,
             UserAgent = false,
-            DefaultThinkTime = 10,
+            DefaultThinkTime = 1,
             RemoteBrowserType = (BrowserType)Enum.Parse(typeof(BrowserType), RemoteType),
             RemoteHubServer = new Uri(RemoteHubServerURL),
             UCITestMode = true,

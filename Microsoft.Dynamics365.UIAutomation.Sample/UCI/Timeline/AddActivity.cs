@@ -1,5 +1,6 @@
 ﻿using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
+using Microsoft.Dynamics365.UIAutomation.Sample.Test_POC;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Security;
 namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
 {
     [TestClass]
-    public class AddActivity
+    public class AddActivity : ExtentReport
     {
         private readonly SecureString _username = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
         private readonly SecureString _password = System.Configuration.ConfigurationManager.AppSettings["OnlinePassword"].ToSecureString();
@@ -84,39 +85,48 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         {
             var client = new WebClient(TestSettings.Options);
             using (var xrmApp = new XrmApp(client))
-            {
-                xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
-
-                xrmApp.Navigation.OpenApp(UCIAppName.Sales);
-
-                xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
-
-                xrmApp.Grid.SwitchView("Active Accounts");
-
-                xrmApp.Grid.OpenRecord(0);
-
-                xrmApp.Timeline.ClickEmailMenuItem();
-                xrmApp.ThinkTime(4000);
-
-                xrmApp.Timeline.AddEmailSubject("Request admission to butterfly section in zoo");
-                xrmApp.Timeline.AddEmailContacts(CreateBccLookupItemsFor("Jim Glynn (sample)", "Nancy Anderson (sample)"), true);
-                xrmApp.Timeline.AddEmailContacts(CreateCcLooupItemsFor("Jim Glynn (sample)", "Nancy Anderson (sample)"), true);
-
-                // This fails as it already has a value.
-                //xrmApp.Timeline.AddEmailContacts(new MultiValueOptionSet()
-                //{
-                //    Name = Reference.Timeline.EmailTo,
-                //    Values = new string[] { "Test Contact", "Jay Zee3" },
-                //});
-
-                var multiselectedItems = xrmApp.Timeline.GetEmail(
-                    new MultiValueOptionSet()
+                try
+                {
                     {
-                        Name = Elements.ElementId[Reference.Timeline.EmailTo],
-                    });
+                        xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
 
-                xrmApp.ThinkTime(3000);
-            }
+                        xrmApp.Navigation.OpenApp(UCIAppName.Sales);
+
+                        xrmApp.Navigation.OpenSubArea("Sales", "Accounts");
+
+                        xrmApp.Grid.SwitchView("Active Accounts");
+
+                        xrmApp.Grid.OpenRecord(0);
+
+                        xrmApp.Timeline.ClickEmailMenuItem();
+                        xrmApp.ThinkTime(4000);
+
+                        xrmApp.Timeline.AddEmailSubject("Request admission to butterfly section in zoo");
+                        xrmApp.Timeline.AddEmailContacts(CreateBccLookupItemsFor("Jim Glynn (sample)", "Nancy Anderson (sample)"), true);
+                        xrmApp.Timeline.AddEmailContacts(CreateCcLooupItemsFor("Jim Glynn (sample)", "Nancy Anderson (sample)"), true);
+
+                        // This fails as it already has a value.
+                        //xrmApp.Timeline.AddEmailContacts(new MultiValueOptionSet()
+                        //{
+                        //    Name = Reference.Timeline.EmailTo,
+                        //    Values = new string[] { "Test Contact", "Jay Zee3" },
+                        //});
+
+                        var multiselectedItems = xrmApp.Timeline.GetEmail(
+                            new MultiValueOptionSet()
+                            {
+                                Name = Elements.ElementId[Reference.Timeline.EmailTo],
+                            });
+
+                        xrmApp.ThinkTime(3000);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogExceptionAndFail(ex);
+                    AddScreenShot(client, "Failed Screen");
+                }
+           
         }
 
         [TestMethod]

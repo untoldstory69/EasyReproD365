@@ -449,7 +449,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Api.UCI
             { "Grid_CellContainer"    ,"//div[@role='grid'][@data-id='grid-cell-container']"},
             { "Grid_ViewSelector"   , "//button[contains(@id,'ViewSelector')]" },
             //{ "Grid_ViewContainer"   , "//div[contains(@data-id,'ViewSelector')]//div[@role='group']//ul" },
-            { "Grid_ViewContainer"   , "//div[contains(@aria-label,'Views')]" },
+            { "Grid_ViewContainer"   , "//ul[contains(@aria-label,'Views')]" },
             //{ "Grid_ViewSelectorMenuItem", ".//span[contains(@class, 'ms-ContextualMenu-itemText')]" },
             { "Grid_ViewSelectorMenuItem", ".//li[contains(@class, 'ms-ContextualMenu-item')]" },
             { "Grid_SubArea"   , "//*[contains(@data-id,'[NAME]')]"},

@@ -6,11 +6,12 @@ using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
 using System.Security;
+using Microsoft.Dynamics365.UIAutomation.Sample.Test_POC;
 
 namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
 {
     [TestClass]
-    public class CreateCaseUCI
+    public class CreateCaseUCI : ExtentReport
     {
 
        
