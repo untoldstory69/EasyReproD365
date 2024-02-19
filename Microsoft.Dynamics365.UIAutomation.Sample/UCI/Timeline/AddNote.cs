@@ -16,6 +16,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         private readonly Uri _xrmUri = new Uri(System.Configuration.ConfigurationManager.AppSettings["OnlineCrmUrl"].ToString());
 
         [TestMethod]
+        [TestCategory("Timeline")]
         public void UCITestAccountAddNote()
         {
             var client = new WebClient(TestSettings.Options);

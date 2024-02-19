@@ -5053,7 +5053,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Api.UCI
 
         internal BrowserCommandResult<bool> CloseOpportunity(double revenue, DateTime closeDate, string description, int thinkTime = Constants.DefaultThinkTime)
         {
-            ThinkTime(thinkTime);
+            //ThinkTime(thinkTime);
 
             return this.Execute(GetOptions($"Close Opportunity"), driver =>
             {

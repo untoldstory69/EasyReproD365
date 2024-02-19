@@ -643,7 +643,10 @@ namespace Microsoft.Dynamics365.UIAutomation.Api.UCI
             { "CloseOpportunityDialog_CancelButton" , "//button[contains(@data-id, 'cancel_id')]" },
             { "CloseActivityDialog_CloseButton" , ".//button[contains(@data-id, 'ok_id')]" },
             { "CloseActivityDialog_CancelButton" , ".//button[contains(@data-id, 'cancel_id')]" },
+           /** updated xpath as per the new locator
             { "Dialog_DialogContext", "//div[contains(@role, 'dialog')]" },
+           **/
+            { "Dialog_DialogContext", "//div[contains(@role, 'presentation')]" },
             { "Dialog_ActualRevenue", "//input[contains(@data-id,'actualrevenue_id')]" },
             { "Dialog_CloseDate", "//input[contains(@data-id,'closedate_id')]" },
             { "Dialog_DescriptionId", "//input[contains(@data-id,'description_id')]" },

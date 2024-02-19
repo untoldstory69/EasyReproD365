@@ -17,6 +17,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         public override void NavigateToHomePage() => NavigateTo(UCIAppName.Sales, "Sales", "Accounts");
 
         [TestMethod]
+        [TestCategory("CommandBar")]
         public void UCITestNewCommandBarButton()
         {
             _xrmApp.CommandBar.ClickCommand("New");
@@ -24,6 +25,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         }
 
         [TestMethod]
+        [TestCategory("CommandBar")]
         public void UCITestRetrieveCommandBarValues()
         {
             var commandValues = _xrmApp.CommandBar.GetCommandValues().Value;

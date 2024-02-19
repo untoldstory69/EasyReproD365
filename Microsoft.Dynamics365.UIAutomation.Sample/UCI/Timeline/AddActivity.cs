@@ -17,6 +17,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         private readonly Uri _xrmUri = new Uri(System.Configuration.ConfigurationManager.AppSettings["OnlineCrmUrl"].ToString());
 
         [TestMethod]
+        [TestCategory("Timeline")]
         public void UCITestAccountAddAppointment()
         {
             var client = new WebClient(TestSettings.Options);
@@ -53,6 +54,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         }
 
         [TestMethod]
+        [TestCategory("Timeline")]
         public void UCITestAccountAddEmail()
         {
             var client = new WebClient(TestSettings.Options);
@@ -103,6 +105,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
 
         [TestMethod]
         [TestCategory("RegressionTests")]
+        [TestCategory("Timeline")]
         public void UCITestAccountGetMultiSelectEmail()
         {
             var client = new WebClient(TestSettings.Options);
@@ -154,6 +157,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         [TestMethod]
         [TestCategory("Fail - Bug")]
         [TestCategory("RegressionTests")]
+        [TestCategory("Timeline")]
         public void UCITestAccountRemoveMultiSelectEmail()
         {
             var client = new WebClient(TestSettings.Options);
@@ -200,6 +204,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
 
 
         [TestMethod]
+        [TestCategory("Timeline")]
         public void UCITestAccountAddPhoneCall()
         {
             var client = new WebClient(TestSettings.Options);
@@ -235,6 +240,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         }
 
         [TestMethod]
+        [TestCategory("Timeline")]
         public void UCITestAccountAddTask()
         {
             var client = new WebClient(TestSettings.Options);

@@ -17,6 +17,7 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
 
         [TestMethod]
         [TestCategory("RegressionTests")]
+        [TestCategory("Timeline")]
         public void UCITestAccountAddPost()
         {
             var client = new WebClient(TestSettings.Options);

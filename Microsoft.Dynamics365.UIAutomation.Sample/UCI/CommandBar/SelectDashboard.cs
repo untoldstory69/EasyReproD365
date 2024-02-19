@@ -6,11 +6,12 @@ using Microsoft.Dynamics365.UIAutomation.Api.UCI;
 using Microsoft.Dynamics365.UIAutomation.Browser;
 using System;
 using System.Security;
+using Microsoft.Dynamics365.UIAutomation.Sample.Test_POC;
 
 namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
 {
     [TestClass]
-    public class SelectDashboardUCI
+    public class SelectDashboardUCI : ExtentReport
     {
         private readonly SecureString _username = System.Configuration.ConfigurationManager.AppSettings["OnlineUsername"].ToSecureString();
         private readonly SecureString _password = System.Configuration.ConfigurationManager.AppSettings["OnlinePassword"].ToSecureString();
@@ -18,20 +19,32 @@ namespace Microsoft.Dynamics365.UIAutomation.Sample.UCI
         private readonly Uri _xrmUri = new Uri(System.Configuration.ConfigurationManager.AppSettings["OnlineCrmUrl"].ToString());
 
         [TestMethod]
+        [TestCategory("CommandBar")]
         public void UCITestSelectDashboard()
         {
             var client = new WebClient(TestSettings.Options);
             using (var xrmApp = new XrmApp(client))
-            {
-                xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
+                try
+                {
+                    {
+                        xrmApp.OnlineLogin.Login(_xrmUri, _username, _password, _mfaSecretKey);
 
-                xrmApp.Navigation.OpenApp(UCIAppName.Sales);
+                        xrmApp.Navigation.OpenApp(UCIAppName.Sales);
 
-                xrmApp.Navigation.OpenSubArea("My Work", "Dashboards");
+                        xrmApp.Navigation.OpenSubArea("My Work", "Dashboards");
 
-                xrmApp.Dashboard.SelectDashboard("Sales Dashboard");
+                        xrmApp.Dashboard.SelectDashboard("Sales Dashboard");
 
-            }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    LogExceptionAndFail(ex);
+                    AddScreenShot(client, "Failed Screen");
+                }
+
+           
         }
     }
 }
